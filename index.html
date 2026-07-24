@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SESAC – Solutions de Climatisation et Froid Industriel</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== Paramètres généraux ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0B2B4A;
+            --secondary: #1A7A7A;
+            --accent: #F5B041;
+            --bg-light: #F4F7FC;
+            --dark: #1E293B;
+            --white: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        body {
+            font-family: 'Poppins', 'Tajawal', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== Barre de navigation ===== */
+        .navbar {
+            background: rgba(11, 43, 74, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .btn-accent {
+            background: var(--accent);
+            color: var(--primary) !important;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+        }
+        .btn-accent:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(245, 176, 65, 0.4);
+            color: var(--primary) !important;
+        }
+        .btn-accent::after {
+            display: none !important;
+        }
+
+        /* Hamburger pour mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: white;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        /* ===== Héro (Header) ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #0a1f33 100%);
+            padding: 80px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(26, 122, 122, 0.15) 0%, transparent 70%);
+            transform: rotate(15deg);
+        }
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-text h1 {
+            color: var(--white);
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        .hero-text h1 span {
+            color: var(--accent);
+        }
+        .hero-text p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            margin-bottom: 35px;
+            max-width: 550px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .hero-buttons .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .hero-buttons .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 176, 65, 0.4);
+        }
+        .hero-buttons .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .hero-buttons .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(245, 176, 65, 0.1);
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: var(--radius);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        /* ===== Chiffres clés ===== */
+        .stats {
+            padding: 60px 0;
+            background: var(--white);
+            box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.05);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+        .stat-item h3 {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--primary);
+            direction: ltr;
+        }
+        .stat-item h3 .counter {
+            display: inline-block;
+        }
+        .stat-item p {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 18px;
+            margin-top: 5px;
+        }
+
+        /* ===== Services ===== */
+        .services {
+            padding: 80px 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title h2 {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 10px;
+        }
+        .section-title p {
+            color: #64748b;
+            font-size: 18px;
+            margin-top: 18px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--white);
+            padding: 35px 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border-bottom: 4px solid transparent;
+        }
+        .service-card:hover {
+            transform: translateY(-12px);
+            border-bottom-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .service-card .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .service-card h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .service-card p {
+            color: #475569;
+            font-size: 15px;
+        }
+
+        /* ===== À propos (résumé) ===== */
+        .about-short {
+            padding: 80px 0;
+            background: var(--white);
+        }
+        .about-short .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .about-short img {
+            width: 100%;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-height: 350px;
+            object-fit: cover;
+        }
+        .about-short h2 {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .about-short h2 span {
+            color: var(--secondary);
+        }
+        .about-short p {
+            color: #475569;
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+        .about-short .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* ===== Produits ===== */
+        .products {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .product-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .product-card .info {
+            padding: 20px 20px 25px;
+        }
+        .product-card .info h4 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .product-card .info p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .product-card .info .price {
+            font-weight: 700;
+            color: var(--secondary);
+            font-size: 18px;
+            direction: ltr;
+        }
+        .product-card .info .btn-detail {
+            display: inline-block;
+            margin-top: 12px;
+            color: var(--accent);
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .product-card .info .btn-detail:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* ===== Témoignages ===== */
+        .testimonials {
+            padding: 80px 0;
+            background: var(--white);
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .testimonial-item {
+            background: var(--bg-light);
+            padding: 30px;
+            border-radius: var(--radius);
+            border-left: 5px solid var(--accent);
+        }
+        .testimonial-item p {
+            font-size: 17px;
+            font-style: italic;
+            color: #334155;
+            margin-bottom: 15px;
+        }
+        .testimonial-item .client {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .testimonial-item .client img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .testimonial-item .client strong {
+            color: var(--primary);
+        }
+
+        /* ===== Formulaire de devis rapide ===== */
+        .quick-quote {
+            padding: 80px 0;
+            background: var(--primary);
+            color: white;
+        }
+        .quick-quote .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .quick-quote h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        .quick-quote h2 span {
+            color: var(--accent);
+        }
+        .quick-quote p {
+            opacity: 0.8;
+            font-size: 18px;
+        }
+        .quick-form input,
+        .quick-form select {
+            width: 100%;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            margin-bottom: 14px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: var(--transition);
+        }
+        .quick-form input::placeholder,
+        .quick-form select {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .quick-form input:focus,
+        .quick-form select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent);
+        }
+        .quick-form select option {
+            color: var(--dark);
+        }
+        .quick-form .btn-submit {
+            background: var(--accent);
+            color: var(--primary);
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        .quick-form .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(245, 176, 65, 0.3);
+        }
+
+        /* ===== Pied de page ===== */
+        .footer {
+            background: #061a2c;
+            padding: 50px 0 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-grid h4 {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .footer-grid a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+        .footer-grid a:hover {
+            color: var(--accent);
+        }
+        .footer-grid .logo {
+            font-size: 24px;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 992px) {
+            .hero .container,
+            .about-short .container,
+            .quick-quote .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text p {
+                margin: 0 auto 30px;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: var(--primary);
+                padding: 20px;
+                border-radius: var(--radius);
+                margin-top: 15px;
+                gap: 15px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hero-text h1 {
+                font-size: 32px;
+            }
+            .section-title h2 {
+                font-size: 28px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            .stat-item h3 {
+                font-size: 32px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .quick-quote .container {
+                text-align: center;
+            }
+        }
+
+        /* ===== Animation d'apparition ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease;
+        }
+        .fade-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Barre de navigation ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">SESAC<span>.</span></a>
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#services">Nos services</a></li>
+                <li><a href="#products">Nos produits</a></li>
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#quote" class="btn-accent">Demander un devis</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ===== Héro ===== -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-text">
+                <h1>Solutions innovantes <br><span>pour un climat idéal</span></h1>
+                <p>SESAC : 25 ans d'expertise dans le traitement de l'air et le froid industriel. Nous allions l'ingénierie allemande à la fabrication locale pour une performance durable.</p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn-primary">Découvrez nos solutions</a>
+                    <a href="#contact" class="btn-secondary">Contactez un ingénieur</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=600&auto=format&fit=crop" alt="Équipements CVC SESAC">
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Chiffres clés ===== -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3><span class="counter" data-target="250">0</span>+</h3>
+                    <p>Projets réalisés</p>
+                </div>
+                <div class="stat-item">
+                    <h3><span class="counter" data-target="30">0</span>+</h3>
+                    <p>Partenaires certifiés</p>
+                </div>
+                <div class="stat-item">
+                    <h3><span class="counter" data-target="15">0</span>+</h3>
+                    <p>Pays</p>
+                </div>
+                <div class="stat-item">
+                    <h3><span class="counter" data-target="98">0</span>%</h3>
+                    <p>Satisfaction client</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Services ===== -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title fade-up">
+                <h2>Nos services intégrés</h2>
+                <p>Des solutions complètes, de la conception à la maintenance</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card fade-up">
+                    <span class="icon">📐</span>
+                    <h3>Conception technique</h3>
+                    <p>Nous étudions vos besoins avec précision et concevons un système adapté à vos espaces et contraintes opérationnelles.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <span class="icon">🏭</span>
+                    <h3>Fabrication locale</h3>
+                    <p>Nos ateliers à Babaali sont équipés des machines les plus récentes pour garantir une qualité de fabrication mondiale.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <span class="icon">🔧</span>
+                    <h3>Installation & mise en service</h3>
+                    <p>Des équipes formées supervisent l'exécution jusqu'à la livraison finale, avec des tests de performance rigoureux.</p>
+                </div>
+                <div class="service-card fade-up">
+                    <span class="icon">🔄</span>
+                    <h3>Maintenance régulière</h3>
+                    <p>Des contrats de maintenance flexibles prolongent la durée de vie de vos équipements et garantissent une efficacité énergétique optimale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== À propos (résumé) ===== -->
+    <section class="about-short" id="about">
+        <div class="container">
+            <img src="https://images.unsplash.com/photo-1581093588401-fbb62a02f120?w=600&auto=format&fit=crop" alt="Usine SESAC">
+            <div class="fade-up">
+                <span class="badge">Depuis 2000</span>
+                <h2>Pionnier dans <span>le traitement de l'air</span></h2>
+                <p><strong>SESAC</strong> est une société algérienne leader dans le domaine des équipements de climatisation et de refroidissement, fondée en 2000 pour offrir des solutions innovantes répondant aux normes internationales les plus élevées.</p>
+                <p>Nous sommes fiers de fournir aux secteurs de l'industrie, de l'hôtellerie, de la santé et des bâtiments administratifs des systèmes de qualité qui garantissent confort et efficacité.</p>
+                <p><strong>📍 Siège :</strong> LES ZOUINES N°116 BABAALI, Algérie</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Produits ===== -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title fade-up">
+                <h2>Nos produits phares</h2>
+                <p>Choisissez parmi notre gamme variée d'équipements CVC</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&auto=format&fit=crop" alt="Unité de traitement d'air">
+                    <div class="info">
+                        <h4>Unité de traitement d'air</h4>
+                        <p>Capacité jusqu'à 50 000 m³/h, haute efficacité énergétique</p>
+                        <span class="price">Demander le prix</span>
+                        <a href="#" class="btn-detail">Détails du produit →</a>
+                    </div>
+                </div>
+                <div class="product-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?w=400&auto=format&fit=crop" alt="Ventilateurs industriels">
+                    <div class="info">
+                        <h4>Ventilateurs industriels</h4>
+                        <p>Résistants à la corrosion, silencieux, faible consommation</p>
+                        <span class="price">Demander le prix</span>
+                        <a href="#" class="btn-detail">Détails du produit →</a>
+                    </div>
+                </div>
+                <div class="product-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&auto=format&fit=crop" alt="Systèmes de filtration">
+                    <div class="info">
+                        <h4>Systèmes de filtration</h4>
+                        <p>Filtres HEPA et à charbon actif pour une qualité d'air exceptionnelle</p>
+                        <span class="price">Demander le prix</span>
+                        <a href="#" class="btn-detail">Détails du produit →</a>
+                    </div>
+                </div>
+                <div class="product-card fade-up">
+                    <img src="https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?w=400&auto=format&fit=crop" alt="Climatiseurs centralisés">
+                    <div class="info">
+                        <h4>Climatiseurs centralisés</h4>
+                        <p>Technologie Inverter, refroidissement et chauffage, respectueux de l'environnement</p>
+                        <span class="price">Demander le prix</span>
+                        <a href="#" class="btn-detail">Détails du produit →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Témoignages ===== -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title fade-up">
+                <h2>Avis de nos clients</h2>
+                <p>Une confiance couronnée de succès</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-item fade-up">
+                    <p>"SESAC a installé l'intégralité des systèmes de climatisation de notre hôtel. Le professionnalisme et le respect des délais étaient remarquables."</p>
+                    <div class="client">
+                        <img src="https://i.pravatar.cc/100?img=1" alt="Client">
+                        <div><strong>Ahmed Benomar</strong><br>Directeur de l'hôtel Aurassi</div>
+                    </div>
+                </div>
+                <div class="testimonial-item fade-up">
+                    <p>"Leurs solutions innovantes nous ont permis de réduire de 30 % notre consommation énergétique. Une équipe technique de haut niveau."</p>
+                    <div class="client">
+                        <img src="https://i.pravatar.cc/100?img=2" alt="Client">
+                        <div><strong>Karima Boudaoud</strong><br>Directrice d'usine agroalimentaire</div>
+                    </div>
+                </div>
+                <div class="testimonial-item fade-up">
+                    <p>"Le service après-vente est excellent, les contrats de maintenance régulière assurent la tranquillité d'esprit et la continuité opérationnelle."</p>
+                    <div class="client">
+                        <img src="https://i.pravatar.cc/100?img=3" alt="Client">
+                        <div><strong>Mohamed Chérif</strong><br>Directeur technique dans un hôpital privé</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Formulaire de devis rapide ===== -->
+    <section class="quick-quote" id="quote">
+        <div class="container">
+            <div class="fade-up">
+                <h2>Obtenez un <span>devis gratuit</span></h2>
+                <p>Remplissez le formulaire et notre ingénieur vous contactera sous 24 heures pour une consultation technique adaptée à votre projet.</p>
+                <p style="margin-top:10px;font-size:14px;">📧 contact@sesac-dz.com | 📞 +213 000 00 00 00</p>
+            </div>
+            <form class="quick-form fade-up" onsubmit="event.preventDefault(); alert('✅ Votre demande a été reçue ! Nous vous contacterons sous peu.');">
+                <input type="text" placeholder="Nom complet" required>
+                <input type="tel" placeholder="Numéro de téléphone" required>
+                <select required>
+                    <option value="">Type d'équipement souhaité</option>
+                    <option>Unité de traitement d'air</option>
+                    <option>Ventilateur industriel</option>
+                    <option>Filtre à air</option>
+                    <option>Climatiseur centralisé</option>
+                    <option>Autre</option>
+                </select>
+                <button type="submit" class="btn-submit">Envoyer la demande</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== Pied de page ===== -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="logo">SESAC<span>.</span></a>
+                    <p style="margin-top:10px;max-width:300px;">Le premier choix en Algérie pour les équipements de climatisation et de froid industriel, alliant ingénierie allemande et fabrication locale.</p>
+                </div>
+                <div>
+                    <h4>Liens rapides</h4>
+                    <a href="#services">Nos services</a>
+                    <a href="#products">Nos produits</a>
+                    <a href="#about">À propos</a>
+                    <a href="#quote">Demander un devis</a>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <a href="#">Catalogues</a>
+                    <a href="#">Manuels d'utilisation</a>
+                    <a href="#">Garantie</a>
+                    <a href="#">Carrières</a>
+                </div>
+                <div>
+                    <h4>Coordonnées</h4>
+                    <p>📍 LES ZOUINES N°116 BABAALI, Algérie</p>
+                    <p>📧 contact@sesac-dz.com</p>
+                    <p>🕘 Dim - Jeu : 08h00 - 17h00</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 SESAC. Tous droits réservés. | Design moderne et professionnel
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JavaScript ===== -->
+    <script>
+        // --- Menu Hamburger ---
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // --- Fermer le menu au clic sur un lien (mobile) ---
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // --- Compteurs animés ---
+        const counters = document.querySelectorAll('.counter');
+        let counted = false;
+
+        function runCounters() {
+            if (counted) return;
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                let current = 0;
+                const increment = target / 80;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 25);
+            });
+            counted = true;
+        }
+
+        // --- Animation Fade-up au défilement ---
+        const fadeEls = document.querySelectorAll('.fade-up');
+
+        function checkVisibility() {
+            const statsSection = document.querySelector('.stats');
+            const statsRect = statsSection.getBoundingClientRect();
+            if (statsRect.top < window.innerHeight - 100 && statsRect.bottom > 0) {
+                runCounters();
+            }
+
+            fadeEls.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 80) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkVisibility);
+        window.addEventListener('load', checkVisibility);
+
+        // --- Défilement fluide pour les liens internes ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === "#") return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
